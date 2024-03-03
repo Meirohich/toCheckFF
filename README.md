@@ -1,1 +1,7 @@
-# Repository for me to check new feautures on FlutterFlow projects
+# toCheck
+
+A new Flutter project.
+
+## Getting Started
+
+FlutterFlow projects are built to run on the Flutter _stable_ release.
