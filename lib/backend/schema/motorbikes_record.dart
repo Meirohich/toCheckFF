@@ -31,10 +31,22 @@ class MotorbikesRecord extends FirestoreRecord {
   int get price => _price ?? 0;
   bool hasPrice() => _price != null;
 
+  // "imageUrl" field.
+  String? _imageUrl;
+  String get imageUrl => _imageUrl ?? '';
+  bool hasImageUrl() => _imageUrl != null;
+
+  // "location" field.
+  String? _location;
+  String get location => _location ?? '';
+  bool hasLocation() => _location != null;
+
   void _initializeFields() {
     _name = snapshotData['name'] as String?;
     _points = snapshotData['points'] as LatLng?;
     _price = castToType<int>(snapshotData['price']);
+    _imageUrl = snapshotData['imageUrl'] as String?;
+    _location = snapshotData['location'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -75,12 +87,16 @@ Map<String, dynamic> createMotorbikesRecordData({
   String? name,
   LatLng? points,
   int? price,
+  String? imageUrl,
+  String? location,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'name': name,
       'points': points,
       'price': price,
+      'imageUrl': imageUrl,
+      'location': location,
     }.withoutNulls,
   );
 
@@ -94,12 +110,14 @@ class MotorbikesRecordDocumentEquality implements Equality<MotorbikesRecord> {
   bool equals(MotorbikesRecord? e1, MotorbikesRecord? e2) {
     return e1?.name == e2?.name &&
         e1?.points == e2?.points &&
-        e1?.price == e2?.price;
+        e1?.price == e2?.price &&
+        e1?.imageUrl == e2?.imageUrl &&
+        e1?.location == e2?.location;
   }
 
   @override
-  int hash(MotorbikesRecord? e) =>
-      const ListEquality().hash([e?.name, e?.points, e?.price]);
+  int hash(MotorbikesRecord? e) => const ListEquality()
+      .hash([e?.name, e?.points, e?.price, e?.imageUrl, e?.location]);
 
   @override
   bool isValidKey(Object? o) => o is MotorbikesRecord;

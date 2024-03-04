@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'package:toCheck/detailspage.dart';
 import 'package:flutter_map/flutter_map.dart' as fmap;
 import 'package:latlong2/latlong.dart' as ll;
 
@@ -28,56 +29,6 @@ class OpenStreetMap extends StatefulWidget {
 
 class _OpenStreetMapState extends State<OpenStreetMap> {
   late final fmap.MapController _mapController;
-
-  // List<ll.LatLng> get _mapPoints => [
-  //       ll.LatLng(55.755793, 37.617134),
-  //       ll.LatLng(55.095960, 38.765519),
-  //       ll.LatLng(56.129038, 40.406502),
-  //       ll.LatLng(54.513645, 36.261268),
-  //       ll.LatLng(54.193122, 37.617177),
-  //       ll.LatLng(54.629540, 39.741809),
-  //     ];
-
-  // List<fmap.Marker> _getMarkers(List<ll.LatLng> mapPoints) {
-  //   return List.generate(
-  //     mapPoints.length,
-  //     (index) => fmap.Marker(
-  //       point: mapPoints[index],
-  //       builder: (ctx) => GestureDetector(
-  //         onTap: () {},
-  //         child: Container(
-  //           decoration: BoxDecoration(
-  //             color: Colors.white,
-  //             borderRadius: BorderRadius.circular(20),
-  //             border: Border.all(color: Colors.black, width: 1),
-  //             boxShadow: [
-  //               BoxShadow(
-  //                 color: Colors.grey.withOpacity(0.5),
-  //                 spreadRadius: 1,
-  //                 blurRadius: 2,
-  //                 offset: Offset(0, 3),
-  //               ),
-  //             ],
-  //           ),
-  //           padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-  //           child: FittedBox(
-  //             child: Text(
-  //               '\$6000',
-  //               textAlign: TextAlign.center,
-  //               style: TextStyle(
-  //                 color: Colors.black,
-  //                 fontSize: 14,
-  //                 fontWeight: FontWeight.bold,
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       width: 40,
-  //       height: 20,
-  //     ),
-  //   );
-  // }
 
   @override
   void initState() {
@@ -103,7 +54,16 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
         return fmap.Marker(
           point: point,
           builder: (ctx) => GestureDetector(
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                context: ctx,
+                builder: (BuildContext context) {
+                  return Dialog(
+                    child: BikeDetailCard(bike: bikeList[index]),
+                  );
+                },
+              );
+            },
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -121,7 +81,7 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
               padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
               child: FittedBox(
                 child: Text(
-                  '\$${bike.price?.toStringAsFixed(2) ?? '0'}', // Assuming price is a double, format to 2 decimal places
+                  '\$${bike.price.toString()}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black,
@@ -154,6 +114,48 @@ class _OpenStreetMapState extends State<OpenStreetMap> {
           ),
           fmap.MarkerLayer(
             markers: _getMarkersFromBikeList(widget.bikeList),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BikeDetailCard extends StatelessWidget {
+  final MotorbikesRecord bike;
+
+  const BikeDetailCard({Key? key, required this.bike}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Image.network(
+              bike.imageUrl), // Assuming the bike object has an imageUrl field
+          ListTile(
+            title: Text(bike.name), // Assuming the bike object has a name field
+            subtitle: Text(bike.points
+                as String), // Use the appropriate field for location
+            trailing: Text('\$${bike.price}'),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              TextButton(
+                child: Text('DETAILS'),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => DetailsPage(
+                        bike:
+                            bike), // Assuming you have a DetailsPage that takes a bike object
+                  ));
+                },
+              ),
+              SizedBox(width: 8),
+            ],
           ),
         ],
       ),

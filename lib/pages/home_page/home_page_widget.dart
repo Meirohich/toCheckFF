@@ -79,41 +79,60 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             ),
             body: SafeArea(
               top: true,
-              child: InkWell(
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onTap: () async {
-                  setState(() {
-                    _model.bikesList = homePageMotorbikesRecordList
-                        .toList()
-                        .cast<MotorbikesRecord>();
-                  });
-                },
-                child: Container(
-                  decoration: const BoxDecoration(),
-                  child: Stack(
-                    children: [
-                      SizedBox(
+              child: Container(
+                decoration: const BoxDecoration(),
+                child: Stack(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: custom_widgets.OpenStreetMap(
                         width: double.infinity,
                         height: double.infinity,
-                        child: custom_widgets.OpenStreetMap(
-                          width: double.infinity,
-                          height: double.infinity,
-                          bikeList: _model.bikesList,
-                        ),
+                        bikeList: _model.bikesList,
                       ),
-                      FFButtonWidget(
+                    ),
+                    FFButtonWidget(
+                      onPressed: () async {
+                        setState(() {
+                          _model.bikesList = homePageMotorbikesRecordList
+                              .where((e) => e.hasPrice())
+                              .toList()
+                              .cast<MotorbikesRecord>();
+                        });
+                      },
+                      text: 'with price',
+                      options: FFButtonOptions(
+                        height: 40.0,
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            24.0, 0.0, 24.0, 0.0),
+                        iconPadding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).primary,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Colors.white,
+                                ),
+                        elevation: 3.0,
+                        borderSide: const BorderSide(
+                          color: Colors.transparent,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                    Align(
+                      alignment: const AlignmentDirectional(1.0, -1.0),
+                      child: FFButtonWidget(
                         onPressed: () async {
                           setState(() {
                             _model.bikesList = homePageMotorbikesRecordList
-                                .where((e) => e.hasPrice())
                                 .toList()
                                 .cast<MotorbikesRecord>();
                           });
                         },
-                        text: 'Button',
+                        text: 'All',
                         options: FFButtonOptions(
                           height: 40.0,
                           padding: const EdgeInsetsDirectional.fromSTEB(
@@ -134,8 +153,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
