@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "228457942455",
+    "project_id": "to-check-kdaho6",
+    "storage_bucket": "to-check-kdaho6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228457942455:android:f6e1da189293d47d05ac32",
+        "android_client_info": {
+          "package_name": "com.mycompany.tocheck"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf2CyD1iwr8BZKyEIfnwGjpWMsFlaPqd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
