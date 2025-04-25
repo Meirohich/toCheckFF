@@ -5,7 +5,8 @@ import 'schema/util/firestore_util.dart';
 import 'schema/motorbikes_record.dart';
 
 export 'dart:async' show StreamSubscription;
-export 'package:cloud_firestore/cloud_firestore.dart';
+export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
+export 'package:firebase_core/firebase_core.dart';
 export 'schema/index.dart';
 export 'schema/util/firestore_util.dart';
 export 'schema/util/schema_util.dart';
@@ -62,7 +63,7 @@ Future<int> queryCollectionCount(
 
   return query.count().get().catchError((err) {
     print('Error querying $collection: $err');
-  }).then((value) => value.count);
+  }).then((value) => value.count!);
 }
 
 Stream<List<T>> queryCollection<T>(
@@ -115,6 +116,15 @@ Future<List<T>> queryCollectionOnce<T>(
       .toList());
 }
 
+Filter filterIn(String field, List? list) => (list?.isEmpty ?? true)
+    ? Filter(field, whereIn: null)
+    : Filter(field, whereIn: list);
+
+Filter filterArrayContainsAny(String field, List? list) =>
+    (list?.isEmpty ?? true)
+        ? Filter(field, arrayContainsAny: null)
+        : Filter(field, arrayContainsAny: list);
+
 extension QueryExtension on Query {
   Query whereIn(String field, List? list) => (list?.isEmpty ?? true)
       ? where(field, whereIn: null)
@@ -159,7 +169,7 @@ Future<FFFirestorePage<T>> queryCollectionPage<T>(
   } else {
     docSnapshot = await query.get();
   }
-  getDocs(QuerySnapshot s) => s.docs
+  final getDocs = (QuerySnapshot s) => s.docs
       .map(
         (d) => safeGet(
           () => recordBuilder(d),
