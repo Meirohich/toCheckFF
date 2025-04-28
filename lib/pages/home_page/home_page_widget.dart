@@ -73,19 +73,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           top: true,
           child: Container(
             decoration: BoxDecoration(),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 700.0,
-                  child: custom_widgets.YoutubePlayerCustom(
-                    width: double.infinity,
-                    height: 700.0,
-                    videoLink: 'https://www.youtube.com/watch?v=d2FGLLOSkC4',
-                  ),
-                ),
-              ],
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: custom_widgets.YoutubePlayerCustom(
+                width: double.infinity,
+                height: double.infinity,
+                videoLink: 'https://www.youtube.com/watch?v=d2FGLLOSkC4',
+              ),
             ),
           ),
         ),
