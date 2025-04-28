@@ -17,48 +17,18 @@ class YoutubePlayerCustom extends StatefulWidget {
     super.key,
     this.width,
     this.height,
+    this.videoLink,
   });
 
   final double? width;
   final double? height;
+  final String? videoLink;
 
   @override
   State<YoutubePlayerCustom> createState() => _YoutubePlayerCustomState();
 }
 
 class _YoutubePlayerCustomState extends State<YoutubePlayerCustom> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Youtube Player Flutter',
-      theme: ThemeData(
-        colorSchemeSeed: Colors.blue,
-        appBarTheme: const AppBarTheme(
-          color: Colors.blueAccent,
-          titleTextStyle: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w300,
-            fontSize: 20,
-          ),
-        ),
-        iconTheme: const IconThemeData(
-          color: Colors.blueAccent,
-        ),
-      ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   late YoutubePlayerController _controller;
   late TextEditingController _idController;
   late TextEditingController _seekToController;
@@ -157,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
               size: 25.0,
             ),
             onPressed: () {
-              log('Settings Tapped!');
+              print('Settings Tapped!');
             },
           ),
         ],
@@ -171,30 +141,6 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       ),
       builder: (context, player) => Scaffold(
-        appBar: AppBar(
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 12.0),
-            child: Image.asset(
-              'assets/ypf.png',
-              fit: BoxFit.fitWidth,
-            ),
-          ),
-          title: const Text(
-            'Youtube Player Flutter',
-            style: TextStyle(color: Colors.white),
-          ),
-          // actions: [
-          //   IconButton(
-          //     icon: const Icon(Icons.video_library),
-          //     onPressed: () => Navigator.push(
-          //       context,
-          //       CupertinoPageRoute(
-          //         builder: (context) => const VideoList(),
-          //       ),
-          //     ),
-          //   ),
-          // ],
-        ),
         body: ListView(
           children: [
             player,

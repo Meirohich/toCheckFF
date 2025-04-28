@@ -78,10 +78,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               children: [
                 Container(
                   width: double.infinity,
-                  height: 250.0,
+                  height: 700.0,
                   child: custom_widgets.YoutubePlayerCustom(
                     width: double.infinity,
-                    height: 250.0,
+                    height: 700.0,
+                    videoLink: 'https://www.youtube.com/watch?v=d2FGLLOSkC4',
                   ),
                 ),
               ],
