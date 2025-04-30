@@ -93,13 +93,22 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   },
                 ),
               ),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(
-                    'Hello World',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.readexPro(
+              if (_model.isFullScreen == false)
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      'Hello World',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            font: GoogleFonts.readexPro(
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontStyle,
+                            ),
+                            letterSpacing: 0.0,
                             fontWeight: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .fontWeight,
@@ -107,23 +116,16 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 .bodyMedium
                                 .fontStyle,
                           ),
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                        ),
-                  ),
-                  Container(
-                    width: 100.0,
-                    height: 100.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
                     ),
-                  ),
-                ],
-              ),
+                    Container(
+                      width: 100.0,
+                      height: 100.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                      ),
+                    ),
+                  ],
+                ),
             ],
           ),
         ),
