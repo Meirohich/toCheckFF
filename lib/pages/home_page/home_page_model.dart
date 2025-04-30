@@ -15,6 +15,8 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   void updateBikesListAtIndex(int index, Function(MotorbikesRecord) updateFn) =>
       bikesList[index] = updateFn(bikesList[index]);
 
+  bool isFullScreen = false;
+
   @override
   void initState(BuildContext context) {}
 
