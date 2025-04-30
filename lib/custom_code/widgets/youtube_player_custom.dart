@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'index.dart'; // Imports other custom widgets
-
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter/services.dart';
 import 'dart:developer';
@@ -36,6 +34,7 @@ class _YoutubePlayerCustomState extends State<YoutubePlayerCustom> {
   late YoutubePlayerController _controller;
   late TextEditingController _idController;
   late TextEditingController _seekToController;
+  bool _lastFullscreenState = false;
 
   late PlayerState _playerState;
   late YoutubeMetaData _videoMetaData;
@@ -73,7 +72,6 @@ class _YoutubePlayerCustomState extends State<YoutubePlayerCustom> {
       setState(() {
         _playerState = _controller.value.playerState;
         _videoMetaData = _controller.metadata;
-        widget.onFullscreenChange(_controller.value.isFullScreen);
       });
     }
   }
@@ -104,10 +102,12 @@ class _YoutubePlayerCustomState extends State<YoutubePlayerCustom> {
           DeviceOrientation.landscapeRight,
         ]);
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+        widget.onFullscreenChange?.call(true);
       },
       onExitFullScreen: () {
         SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+        widget.onFullscreenChange?.call(false);
       },
       player: YoutubePlayer(
         controller: _controller,

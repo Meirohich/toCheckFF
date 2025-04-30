@@ -75,21 +75,48 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 elevation: 2.0,
               )
             : null,
-        body: Container(
-          decoration: BoxDecoration(),
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            child: custom_widgets.YoutubePlayerCustom(
-              width: double.infinity,
-              height: double.infinity,
-              videoLink: 'https://www.youtube.com/watch?v=d2FGLLOSkC4',
-              onFullscreenChange: (isFullScreen) async {
-                _model.isFullScreen = isFullScreen;
-                safeSetState(() {});
-              },
+        body: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                child: custom_widgets.YoutubePlayerCustom(
+                  width: double.infinity,
+                  height: double.infinity,
+                  videoLink: 'https://www.youtube.com/watch?v=d2FGLLOSkC4',
+                  onFullscreenChange: (isFullScreen) async {
+                    _model.isFullScreen = isFullScreen;
+                    safeSetState(() {});
+                  },
+                ),
+              ),
             ),
-          ),
+            Text(
+              'Hello World',
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    font: GoogleFonts.readexPro(
+                      fontWeight:
+                          FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                      fontStyle:
+                          FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                    ),
+                    letterSpacing: 0.0,
+                    fontWeight:
+                        FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                    fontStyle:
+                        FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                  ),
+            ),
+            Container(
+              width: 100.0,
+              height: 100.0,
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.of(context).secondaryBackground,
+              ),
+            ),
+          ],
         ),
       ),
     );
